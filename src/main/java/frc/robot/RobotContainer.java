@@ -68,7 +68,7 @@ public class RobotContainer {
     SmartDashboard.putData("Zero Gyro", new DriveZeroGyro(driveTrain, log));
     SmartDashboard.putData("Zero Odometry", new DriveResetPose(0, 0, 0, driveTrain, log));
     SmartDashboard.putData("Calibrate Drive Motors", new DriveCalibration(0.5, 12, 0.05, driveTrain, log));
-    SmartDashboard.putData("Calibrate Turn Motors", new DriveTurnCalibration(1.0, 15, 0.1, driveTrain, log));
+    SmartDashboard.putData("Calibrate Turn Motors", new DriveTurnCalibration(1.0, 10, 0.2, driveTrain, log));
     SmartDashboard.putData("Drive Wheels 0 deg", new DriveSetState(0, 0, driveTrain, log));
     SmartDashboard.putData("Drive Wheels +85 deg", new DriveSetState(0, 85, driveTrain, log));
     SmartDashboard.putData("Drive Wheels +95 deg", new DriveSetState(0, 95, driveTrain, log));
