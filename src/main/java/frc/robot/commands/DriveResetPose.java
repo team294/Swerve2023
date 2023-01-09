@@ -21,7 +21,7 @@ public class DriveResetPose extends CommandBase {
   private DriveTrain driveTrain;
   private FileLog log;
   private double curX, curY, curAngle;
-
+  private boolean onlyAngle;
   /**
 	 * Resets the pose, gyro, and encoders on the drive train
    * @param curXinMeters Robot X location in the field, in meters (0 = middle of robot wherever the robot starts auto mode, +=away from our drivestation)
@@ -35,34 +35,33 @@ public class DriveResetPose extends CommandBase {
     curX = curXinMeters;
     curY = curYinMeters;
     curAngle = curAngleinDegrees;
-
+    onlyAngle = false;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
   }
 
     /**
 	 * Resets the pose, gyro, and encoders on the drive train
+   * reset the angle but keep the current position (use the current measured position as the new position).
    * @param curAngleinDegrees Robot angle on the field, in degrees (0 = facing away from our drivestation)
    * @param driveTrain DriveTrain subsytem
 	 */
   public DriveResetPose(double curAngleinDegrees, DriveTrain driveTrain, FileLog log) {
     this.driveTrain = driveTrain;
     this.log = log;
-    curX = driveTrain.getPose().getTranslation().getX();
-    curY = driveTrain.getPose().getTranslation().getY();
     curAngle = curAngleinDegrees;
-
+    onlyAngle = true;;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
   }
 
-
-  // TODO Add 2nd constructor that accepts angle only (not XMeters or YMeters).  Use that to 
-  // reset the angle but keep the current position (use the current measured position as the new position).
-
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    if(onlyAngle){
+      curX = driveTrain.getPose().getX();
+      curY = driveTrain.getPose().getY();
+    }
     log.writeLog(false, "DriveResetPose", "Init", "Curr X", curX, "CurrY", curY, "CurAng", curAngle);
     driveTrain.resetPose(new Pose2d(curX, curY, Rotation2d.fromDegrees(curAngle)));
   }
