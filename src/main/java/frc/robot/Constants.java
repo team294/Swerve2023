@@ -72,12 +72,22 @@ public final class Constants {
         // and ensures that the robot travels in the requested direction.  So, use min value of all 4 motors,
         // and further derate (initial test by 5%) to account for some battery droop under heavy loads.
         public static final double kMaxSpeedMetersPerSecond = 3.8;          // CALIBRATED
-        public static final double kMaxAccelerationMetersPerSecondSquare = 3.8;
-        public static final double kMaxTurningRadiansPerSecond = 12.0;   // TODO -- Calibrate
+        public static final double kMaxAccelerationMetersPerSecondSquare = 17; // was 3.8
+        public static final double kMaxTurningRadiansPerSecond = 29.671;   // took 1700 degrees and converted to radians
         public static final double kVDrive = 0.226; // CALIBRATED = 0.226.  in % output per meters per second
         public static final double kADrive = 0.0;                   // TODO -- Calibrate
         public static final double kSDrive = 0.017; // CALIBRATED = 0.017.  in % output
-      }
+      
+        public static final double FLMaxAcceleration = 28.073;
+        public static final double BLMaxAcceleration = 18.482;
+        public static final double FRMaxAcceleration = 26.343;
+        public static final double BRMaxAcceleration = 19.289;
+
+        public static final double FLMaxTurnVelocity = 1744.629; //in degrees
+        public static final double BLMaxTurnVelocity = 1736.719;
+        public static final double FRMaxTurnVelocity = 1762.207;
+        public static final double BRMaxTurnVelocity = 2085.645;
+    }
 
       public static final class DriveConstants {
         // The locations of the wheels relative to the physical center of the robot, in meters.
@@ -101,4 +111,3 @@ public final class Constants {
         public static double offsetAngleBackRightMotor = 0;
       }
 }
-
