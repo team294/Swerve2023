@@ -128,12 +128,12 @@ public class RobotContainer {
     // xb[4].whenHeld(new ShootSetup(false, 4100, pivisionhub, shooter, log));        
     
     //x - shot speed using vision
-    // xb[3].whileHeld(new ShootSetup(true, 3100, pivisionhub, shooter, log));        
+    // xb[3].whileTrue(new ShootSetup(true, 3100, pivisionhub, shooter, log));        
     
     // LB = 5, RB = 6
-    // xb[5].whenPressed(new TurretSetPercentOutput(-0.1, turret, log));
+    // xb[5].onTrue(new TurretSetPercentOutput(-0.1, turret, log));
     // xb[5].whenReleased(new TurretStop(turret, log));
-    // xb[6].whenPressed(new TurretSetPercentOutput(+0.1, turret, log));
+    // xb[6].onTrue(new TurretSetPercentOutput(+0.1, turret, log));
     // xb[6].whenReleased(new TurretStop(turret, log));
 
     // back = 7, start = 8 
@@ -165,18 +165,18 @@ public class RobotContainer {
     // from the driver, then press this button.
 
     // left joystick left button
-    //left[1].whenPressed(new IntakeRetractAndFlush(intakeFront, uptake, feeder, log));
+    //left[1].onTrue(new IntakeRetractAndFlush(intakeFront, uptake, feeder, log));
     // resets current angle to 0, keeps current X and Y
-    left[1].whenPressed(new DriveResetPose(0,driveTrain,log));
+    left[1].onTrue(new DriveResetPose(0,driveTrain,log));
    
     // left joystick right button
-    //left[2].whenPressed(new IntakeRetractAndFlush(intakeFront, uptake, feeder, log));
+    //left[2].onTrue(new IntakeRetractAndFlush(intakeFront, uptake, feeder, log));
 
     // right joystick left button
-    // right[1].whenPressed(new IntakeExtendAndTurnOnMotors(intakeFront, uptake, log)); 
+    // right[1].onTrue(new IntakeExtendAndTurnOnMotors(intakeFront, uptake, log)); 
 
     // right joystick right button
-    // right[2].whenPressed(new IntakeRetractAndFlush(intakeFront, uptake, feeder, log));  
+    // right[2].onTrue(new IntakeRetractAndFlush(intakeFront, uptake, feeder, log));  
   }
 
   /** 
@@ -199,34 +199,34 @@ public class RobotContainer {
     }
 
     // top row UP then DOWN, from LEFT to RIGHT
-    // coP[1].whenPressed(new IntakeToColorSensor(intakeFront, uptake, log)); 
-    // coP[2].whenPressed(new ShooterSetVelocity(InputMode.kSpeedRPM, ShooterConstants.shooterDefaultRPM, shooter, log)); 
+    // coP[1].onTrue(new IntakeToColorSensor(intakeFront, uptake, log)); 
+    // coP[2].onTrue(new ShooterSetVelocity(InputMode.kSpeedRPM, ShooterConstants.shooterDefaultRPM, shooter, log)); 
 
-    // coP[3].whenPressed(new UptakeFeedBall(uptake, feeder, log)); 
-    // coP[4].whenPressed(new UptakeEjectBall(uptake, log)); 
+    // coP[3].onTrue(new UptakeFeedBall(uptake, feeder, log)); 
+    // coP[4].onTrue(new UptakeEjectBall(uptake, log)); 
 
     // coP[5].whenHeld(new ClimbSetPercentOutput(0.4, climb, log)); // manually raise climb arms, slowly
     // coP[6].whenHeld(new ClimbSetPercentOutput(-0.4, climb, log)); // manually lower climb arms, slowly
     
     // top row RED SWITCH
-    // coP[8].whenPressed(new StopAllMotors(feeder, shooter, intakeFront, uptake, log));
+    // coP[8].onTrue(new StopAllMotors(feeder, shooter, intakeFront, uptake, log));
 
     // middle row UP then DOWN, from LEFT to RIGHT
-    // coP[9].whenPressed(new IntakeSetPercentOutput(IntakeConstants.onPct, IntakeConstants.onPctTransfer, intakeFront, log)); // forward intake and transfer
-    // coP[10].whenPressed(new IntakeSetPercentOutput(-IntakeConstants.onPct, -IntakeConstants.onPctTransfer, intakeFront, log)); // reverse intake and transfer
+    // coP[9].onTrue(new IntakeSetPercentOutput(IntakeConstants.onPct, IntakeConstants.onPctTransfer, intakeFront, log)); // forward intake and transfer
+    // coP[10].onTrue(new IntakeSetPercentOutput(-IntakeConstants.onPct, -IntakeConstants.onPctTransfer, intakeFront, log)); // reverse intake and transfer
 
-    // coP[11].whenPressed(new UptakeSetPercentOutput(-UptakeConstants.onPct, 0, uptake, log)); // reverse uptake
-    // coP[12].whenPressed(new UptakeSetPercentOutput(UptakeConstants.onPct, 0, uptake, log)); // forward uptake
+    // coP[11].onTrue(new UptakeSetPercentOutput(-UptakeConstants.onPct, 0, uptake, log)); // reverse uptake
+    // coP[12].onTrue(new UptakeSetPercentOutput(UptakeConstants.onPct, 0, uptake, log)); // forward uptake
 
-    // coP[13].whenPressed(new FeederSetPercentOutput(-FeederConstants.onPct, feeder, log)); // reverse feeder
-    // coP[14].whenPressed(new FeederSetPercentOutput(FeederConstants.onPct, feeder, log)); // forward feeder
+    // coP[13].onTrue(new FeederSetPercentOutput(-FeederConstants.onPct, feeder, log)); // reverse feeder
+    // coP[14].onTrue(new FeederSetPercentOutput(FeederConstants.onPct, feeder, log)); // forward feeder
 
     // middle row UP OR DOWN, fourth button
-    // coP[7].whenPressed(new IntakePistonToggle(intakeFront, uptake, log)); 
+    // coP[7].onTrue(new IntakePistonToggle(intakeFront, uptake, log)); 
 
     // bottom row UP then DOWN, from LEFT to RIGHT
-    // coP[15].whenPressed(new ClimberSetExtended(true,climber, log)); // climb extend
-    // coP[16].whenPressed(new ClimberSetExtended(false,climber, log)); // climb retract
+    // coP[15].onTrue(new ClimberSetExtended(true,climber, log)); // climb extend
+    // coP[16].onTrue(new ClimberSetExtended(false,climber, log)); // climb retract
   }
 
 
