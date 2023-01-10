@@ -95,10 +95,11 @@ public final class Constants {
 
         // Update the offset angles in RobotPreferences (in Shuffleboard), not in this code!
         // After updating in RobotPreferences, you will need to re-start the robot code for the changes to take effect.
-        public static double offsetAngleFrontLeftMotor = 0;
-        public static double offsetAngleFrontRightMotor = 0;
-        public static double offsetAngleBackLeftMotor = 0;
-        public static double offsetAngleBackRightMotor = 0;
+        // When calibrating offset, set the wheels to zero degrees with the gear on the right
+        public static double offsetAngleFrontLeftMotor = 0; // 92.6
+        public static double offsetAngleFrontRightMotor = 0; // -14
+        public static double offsetAngleBackLeftMotor = 0; // -108.2
+        public static double offsetAngleBackRightMotor = 0; // 158.4
       }
 }
 
