@@ -21,7 +21,8 @@ public class DriveResetPose extends CommandBase {
   private DriveTrain driveTrain;
   private FileLog log;
   private double curX, curY, curAngle;
-  private boolean onlyAngle;
+  private boolean onlyAngle;      // true = resent angle but not X-Y position
+
   /**
 	 * Resets the pose, gyro, and encoders on the drive train
    * @param curXinMeters Robot X location in the field, in meters (0 = middle of robot wherever the robot starts auto mode, +=away from our drivestation)
@@ -40,7 +41,7 @@ public class DriveResetPose extends CommandBase {
     addRequirements(driveTrain);
   }
 
-    /**
+  /**
 	 * Resets the pose, gyro, and encoders on the drive train
    * reset the angle but keep the current position (use the current measured position as the new position).
    * @param curAngleinDegrees Robot angle on the field, in degrees (0 = facing away from our drivestation)
@@ -50,7 +51,7 @@ public class DriveResetPose extends CommandBase {
     this.driveTrain = driveTrain;
     this.log = log;
     curAngle = curAngleinDegrees;
-    onlyAngle = true;;
+    onlyAngle = true;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
   }
@@ -63,6 +64,8 @@ public class DriveResetPose extends CommandBase {
       curY = driveTrain.getPose().getY();
     }
     log.writeLog(false, "DriveResetPose", "Init", "Curr X", curX, "CurrY", curY, "CurAng", curAngle);
+
+    driveTrain.zeroGyroRotation(curAngle);
     driveTrain.resetPose(new Pose2d(curX, curY, Rotation2d.fromDegrees(curAngle)));
   }
 
