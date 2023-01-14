@@ -15,6 +15,7 @@ public class DriveSetState extends CommandBase {
   private DriveTrain driveTrain;
   private FileLog log;
   private SwerveModuleState[] desiredStates;
+  private boolean isOpenLoop;
 
   /**
    * Sets the state of all 4 swerve motors
@@ -23,9 +24,10 @@ public class DriveSetState extends CommandBase {
    * @param driveTrain
    * @param log
    */
-  public DriveSetState(double driveSpeed, double angle, DriveTrain driveTrain, FileLog log) {
+  public DriveSetState(double driveSpeed, double angle, DriveTrain driveTrain, FileLog log, boolean isOpenLoop) {
     this.driveTrain = driveTrain;
     this.log = log;
+    this.isOpenLoop = isOpenLoop;
     SwerveModuleState state = new SwerveModuleState(driveSpeed, Rotation2d.fromDegrees(angle));
     desiredStates = new SwerveModuleState[] { state, state, state, state };
 
@@ -43,7 +45,7 @@ public class DriveSetState extends CommandBase {
     // TODO Make open/closed loop an optional parameter to the command, instead of always true
     // Calibrate closed-loop control in SwerveModule.setDesiredState, then decide when calling
     // this command to use true vs false.  What should the default be for this command? 
-    driveTrain.setModuleStates(desiredStates, true);
+    driveTrain.setModuleStates(desiredStates, isOpenLoop);
   }
 
   // Called once the command ends or is interrupted.

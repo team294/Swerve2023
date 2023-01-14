@@ -36,6 +36,7 @@ public class DriveStraight extends CommandBase {
   private Translation2d startLocation;
   private SwerveModuleState[] desiredStates;
   private FileLog log;
+  private boolean isOpenLoop;
 
   private int accuracyCounter = 0;
 
@@ -81,7 +82,7 @@ public class DriveStraight extends CommandBase {
    * @param driveTrain reference to the drive train subsystem
    * @param log
    */
-  public DriveStraight(boolean fieldRelative, boolean regenerate, DriveTrain driveTrain, FileLog log) {
+  public DriveStraight(boolean fieldRelative, boolean regenerate, DriveTrain driveTrain, FileLog log, boolean isOpenLoop) {
     this.driveTrain = driveTrain;
     this.log = log;
     this.fieldRelative = fieldRelative;
@@ -91,6 +92,7 @@ public class DriveStraight extends CommandBase {
     this.target = 0;
     this.maxVel = 0.5 * SwerveConstants.kMaxSpeedMetersPerSecond;
     this.maxAccel = 0.5 * SwerveConstants.kMaxAccelerationMetersPerSecondSquare;
+    this.isOpenLoop = isOpenLoop;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
@@ -162,7 +164,7 @@ public class DriveStraight extends CommandBase {
     desiredStates[1].speedMetersPerSecond = targetVel;
     desiredStates[2].speedMetersPerSecond = targetVel;
     desiredStates[3].speedMetersPerSecond = targetVel;
-    driveTrain.setModuleStates(desiredStates, true);      // TODO Calibrate closed-loop control in SwerveModule.setDesiredState, then change this to closed loop (false)
+    driveTrain.setModuleStates(desiredStates, isOpenLoop);      // TODO Calibrate closed-loop control in SwerveModule.setDesiredState, then change this to closed loop (false)
 
     // Read current module states for logging
     SwerveModuleState[] currentStates = driveTrain.getModuleStates();
