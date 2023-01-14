@@ -95,7 +95,6 @@ public class DriveTrain extends SubsystemBase implements Loggable {
     lfRunningAvg.reset();
 
     // create and initialize odometery
-    // TODO Upgrade to 2023 code with SwerveModulePosition (see release notes for 2023 WPILib and section 25.5)
     odometry = new SwerveDriveOdometry(kDriveKinematics, Rotation2d.fromDegrees(getGyroRotation()), 
         getModulePotisions(), new Pose2d(0, 0, Rotation2d.fromDegrees(0)) );
   }
@@ -113,7 +112,7 @@ public class DriveTrain extends SubsystemBase implements Loggable {
 
   /**
    * Gets the raw gyro angle (can be greater than 360).
-   * Angle is negated from the gyro, so that + = left and - = right
+   * Angle from gyro is negated, so that + = left and - = right
    * @return raw gyro angle, in degrees.
    */
   public double getGyroRaw() {
@@ -242,6 +241,17 @@ public class DriveTrain extends SubsystemBase implements Loggable {
   }
 
   /**
+   * Returns the speed of the chassis in X, Y, and theta.
+   * <p> Speed of the robot in the x direction, in meters per second (+ = forward)
+   * <p> Speed of the robot in the y direction, in meters per second (+ = move to the left)
+   * <p> Angular rate of the robot, in radians per second (+ = turn to the left)
+   * @return ChassisSpeeds object representing the chassis speeds.
+   */
+  public ChassisSpeeds getChassisSpeeds() {
+    return kDriveKinematics.toChassisSpeeds(getModuleStates());
+  }
+
+  /**
    * Reads the current swerve ModulePositions.
    * @return The current module positions, as measured by the encoders.  
    * 0 = FrontLeft, 1 = FrontRight, 2 = BackLeft, 3 = BackRight
@@ -257,7 +267,7 @@ public class DriveTrain extends SubsystemBase implements Loggable {
    * Method to drive the robot using desired robot velocity and orientation, such as from joystick info.
    *
    * @param xSpeed Speed of the robot in the x direction, in meters per second (+ = forward)
-   * @param ySpeed Speed of the robot in the y direction, in meters per second (- = sideways)
+   * @param ySpeed Speed of the robot in the y direction, in meters per second (+ = move to the left)
    * @param rot Angular rate of the robot, in radians per second (+ = turn to the left)
    * @param fieldRelative True = the provided x and y speeds are relative to the field.
    * @param isOpenLoop true = fixed drive percent output to approximate velocity, false = closed loop drive velocity control
@@ -271,7 +281,7 @@ public class DriveTrain extends SubsystemBase implements Loggable {
    * Method to drive the robot using desired robot velocity and orientation, such as from joystick info.
    *
    * @param xSpeed Speed of the robot in the x direction, in meters per second (+ = forward)
-   * @param ySpeed Speed of the robot in the y direction, in meters per second (- = sideways)
+   * @param ySpeed Speed of the robot in the y direction, in meters per second (+ = move to the left)
    * @param rot Angular rate of the robot, in radians per second (+ = turn to the left)
    * @param centerOfRotationMeters The center of rotation. For example, if you set the center of
    *     rotation at one corner of the robot and XSpeed, YSpeed = 0, then the robot will rotate around that corner.
@@ -297,8 +307,6 @@ public class DriveTrain extends SubsystemBase implements Loggable {
 
   // TODO Add version of setModuleStates with acceleration
 
-  // TODO Use the kDriveKinematics object to return the ChassisSpeeds.
-
   // ************ Odometry methods
 
   /**
@@ -313,6 +321,8 @@ public class DriveTrain extends SubsystemBase implements Loggable {
   /**
    * Resets the odometry to the specified pose.  I.e. defines the robot's
    * position and orientation on the field.
+   * This method also resets the gyro, which is required for the pose
+   * to properly reset.
    *
    * @param pose The pose to which to set the odometry.  Pose components include
    *    <p> Robot X location in the field, in meters (0 = middle of robot wherever the robot starts auto mode, +=away from our drivestation)
@@ -320,10 +330,10 @@ public class DriveTrain extends SubsystemBase implements Loggable {
    *    <p> Robot angle on the field (0 = facing away from our drivestation, + to the left, - to the right)
    */
   public void resetPose(Pose2d pose) {
+    zeroGyroRotation(pose.getRotation().getDegrees());
     odometry.resetPosition( Rotation2d.fromDegrees(getGyroRotation()),
         getModulePotisions(), pose );
   }
-  // TODO Upgrade to 2023 code with SwerveModulePosition (see release notes for 2023 WPILib and section 25.5)
 
   
   // ************ Information methods
@@ -361,7 +371,6 @@ public class DriveTrain extends SubsystemBase implements Loggable {
     angularVelocity =  lfRunningAvg.calculate( (currAng - prevAng) / (currTime - prevTime) * 1000 );
 
     // Update robot odometry
-    // TODO Upgrade to 2023 code with SwerveModulePosition (see release notes for 2023 WPILib and section 25.5)
     double degrees = getGyroRotation();
     odometry.update(Rotation2d.fromDegrees(degrees), getModulePotisions());
         
@@ -373,10 +382,9 @@ public class DriveTrain extends SubsystemBase implements Loggable {
       }
 
       // Update data on SmartDashboard
-      // TODO Add more logging to Shuffleboard!
       // SmartDashboard.putNumber("Drive Average Dist in Meters", Units.inchesToMeters(getAverageDistance()));
-      // SmartDashboard.putNumber("Drive Fwd Velocity", getLeftEncoderVelocity());      // TODO use the ChassisSpeeds to get this
-      // SmartDashboard.putNumber("Drive Sideways Velocity", getRightEncoderVelocity());  // TODO use the ChassisSpeeds to get this
+      SmartDashboard.putNumber("Drive X Fwd Velocity", getChassisSpeeds().vxMetersPerSecond);
+      SmartDashboard.putNumber("Drive Y Left Velocity", getChassisSpeeds().vyMetersPerSecond);
       SmartDashboard.putBoolean("Drive isGyroReading", isGyroReading());
       SmartDashboard.putNumber("Drive Raw Gyro", getGyroRaw());
       SmartDashboard.putNumber("Drive Gyro Rotation", degrees);
