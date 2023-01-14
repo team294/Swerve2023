@@ -81,11 +81,6 @@ public class SwerveModule {
     turningMotor.setInverted(true);
     turningMotor.enableVoltageCompensation(true);
 
-    // TODO: Try using the turning encoder for PID 0?
-    // turningMotor.configRemoteFeedbackFilter(turningEncoder, 0);
-    // turningMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.RemoteSensor0, 0, 0);
-    // turningMotor.configAllowableClosedloopError(0, 0.5);
-
     // other configs for drive and turning motors
     setMotorModeCoast(true);        // true on boot up, so robot is easy to push.  Change to false in autoinit or teleopinit
 

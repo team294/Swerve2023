@@ -65,7 +65,6 @@ public class DriveResetPose extends CommandBase {
     }
     log.writeLog(false, "DriveResetPose", "Init", "Curr X", curX, "CurrY", curY, "CurAng", curAngle);
 
-    driveTrain.zeroGyroRotation(curAngle);
     driveTrain.resetPose(new Pose2d(curX, curY, Rotation2d.fromDegrees(curAngle)));
   }
 
