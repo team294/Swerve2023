@@ -18,7 +18,7 @@ public final class CTREConfigs {
         swerveDriveFXConfig.voltageCompSaturation = 12.0;
         swerveDriveFXConfig.neutralDeadband = 0.0;
 
-        swerveDriveFXConfig.slot0.kP = 0.0;     // Team364 uses 0.10             // TODO calibrate
+        swerveDriveFXConfig.slot0.kP = 0.05;     // Team364 uses 0.10             // TODO calibrate
         swerveDriveFXConfig.slot0.kI = 0.0;
         swerveDriveFXConfig.slot0.kD = 0.0;
         swerveDriveFXConfig.slot0.kF = 0.0;     // Use arbitrary FF instead
