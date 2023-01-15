@@ -79,6 +79,7 @@ public class RobotContainer {
     // SmartDashboard.putData("Drive Trajectory Relative", new DriveFollowTrajectory(CoordType.kRelative, StopType.kBrake, trajectoryCache.cache[TrajectoryType.test.value], false, PIDType.kTalon, driveTrain, log));
     // SmartDashboard.putData("Drive Trajectory Curve Relative", new DriveFollowTrajectory(CoordType.kRelative, StopType.kBrake, trajectoryCache.cache[TrajectoryType.testCurve.value], false, PIDType.kTalon, driveTrain, log));
     // SmartDashboard.putData("Drive Trajectory Absolute", new DriveFollowTrajectory(CoordType.kAbsolute, StopType.kBrake, trajectoryCache.cache[TrajectoryType.test.value], driveTrain, log));  
+    SmartDashboard.putData("Example Auto S-Shape", new ExampleAuto(driveTrain));
   }
 
   /**

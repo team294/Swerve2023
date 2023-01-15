@@ -20,7 +20,7 @@ public class ExampleAuto extends SequentialCommandGroup {
     public ExampleAuto(DriveTrain s_Swerve){
         TrajectoryConfig config =
             new TrajectoryConfig(
-                    Constants.SwerveConstants.kMaxSpeedMetersPerSecond,
+                    Constants.SwerveConstants.kNominalSpeedMetersPerSecond,
                     Constants.SwerveConstants.kMaxAccelerationMetersPerSecondSquare)
                 .setKinematics(Constants.DriveConstants.kDriveKinematics);
 
