@@ -72,6 +72,7 @@ public class RobotContainer {
     SmartDashboard.putData("Drive Wheels 0 deg", new DriveSetState(0, 0, true, driveTrain, log));
     SmartDashboard.putData("Drive Wheels +85 deg", new DriveSetState(0, 85, true, driveTrain, log));
     SmartDashboard.putData("Drive Wheels +95 deg", new DriveSetState(0, 95, true, driveTrain, log));
+    SmartDashboard.putData("Drive 1.5 mps 0 deg", new DriveSetState(1.5, 0, true, driveTrain, log));
     SmartDashboard.putData("Drive Straight", new DriveStraight(false, false, true, driveTrain, log));
 
     // Testing for autos and trajectories

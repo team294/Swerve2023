@@ -451,14 +451,14 @@
                 {
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Drive X Fwd Velocity",
-                  "_title": "Drive X Fwd Velocity",
+                  "_title": "SmartDashboard/Drive X Fwd Velocity",
                   "_glyph": 148,
                   "_showGlyph": false
                 },
                 {
                   "_type": "Text View",
                   "_source0": "network_table:///SmartDashboard/Drive Y Left Velocity",
-                  "_title": "Drive Y Left Velocity",
+                  "_title": "SmartDashboard/Drive Y Left Velocity",
                   "_glyph": 148,
                   "_showGlyph": false
                 },
@@ -517,7 +517,7 @@
           "7,0": {
             "size": [
               2,
-              3
+              4
             ],
             "content": {
               "_type": "List Layout",
@@ -574,11 +574,18 @@
                   "_title": "Drive Wheels +95 deg",
                   "_glyph": 148,
                   "_showGlyph": false
+                },
+                {
+                  "_type": "Command",
+                  "_source0": "network_table:///SmartDashboard/Drive 1.5 mps 0 deg",
+                  "_title": "Drive 1.5 mps 0 deg",
+                  "_glyph": 148,
+                  "_showGlyph": false
                 }
               ]
             }
           },
-          "7,3": {
+          "9,0": {
             "size": [
               2,
               2
@@ -633,9 +640,9 @@
     }
   ],
   "windowGeometry": {
-    "x": 4.0,
-    "y": 0.0,
-    "width": 1746.0,
-    "height": 926.0
+    "x": -8.0,
+    "y": -8.0,
+    "width": 1936.0,
+    "height": 1056.0
   }
 }
