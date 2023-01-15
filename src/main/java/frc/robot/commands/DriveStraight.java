@@ -36,6 +36,7 @@ public class DriveStraight extends CommandBase {
   private Translation2d startLocation;
   private SwerveModuleState[] desiredStates;
   private FileLog log;
+  private boolean isOpenLoop;
 
   private int accuracyCounter = 0;
 
@@ -54,15 +55,17 @@ public class DriveStraight extends CommandBase {
    * @param maxVel max velocity in meters/second, between 0 and kMaxSpeedMetersPerSecond in Constants
    * @param maxAccel max acceleration in meters/second2, between 0 and kMaxAccelerationMetersPerSecondSquared in Constants
    * @param regenerate true = regenerate profile each cycle (to accurately reach target distance), false = don't regenerate (for debugging)
+   * @param isOpenLoop true = feed-forward only for velocity control, false = PID feedback velocity control
    * @param driveTrain reference to the drive train subsystem
    * @param log
    */
-  public DriveStraight(double target, boolean fieldRelative, double angle, double maxVel, double maxAccel, boolean regenerate, DriveTrain driveTrain, FileLog log) {
+  public DriveStraight(double target, boolean fieldRelative, double angle, double maxVel, double maxAccel, boolean regenerate, boolean isOpenLoop, DriveTrain driveTrain, FileLog log) {
     this.driveTrain = driveTrain;
     this.log = log;
     this.fieldRelative = fieldRelative;
     angleInput = angle;
     this.regenerate = regenerate;
+    this.isOpenLoop = isOpenLoop;
     this.fromShuffleboard = false;
     this.target = target;
     this.maxVel = MathUtil.clamp(Math.abs(maxVel), 0, SwerveConstants.kMaxSpeedMetersPerSecond);
@@ -78,15 +81,17 @@ public class DriveStraight extends CommandBase {
    * @param fieldRelative false = angle is relative to current robot facing,
    *   true = angle is an absolute field angle (0 = away from drive station)
    * @param regenerate true = regenerate profile each cycle (to accurately reach target distance), false = don't regenerate (for debugging)
+   * @param isOpenLoop true = feed-forward only for velocity control, false = PID feedback velocity control
    * @param driveTrain reference to the drive train subsystem
    * @param log
    */
-  public DriveStraight(boolean fieldRelative, boolean regenerate, DriveTrain driveTrain, FileLog log) {
+  public DriveStraight(boolean fieldRelative, boolean regenerate, boolean isOpenLoop, DriveTrain driveTrain, FileLog log) {
     this.driveTrain = driveTrain;
     this.log = log;
     this.fieldRelative = fieldRelative;
     angleInput = 0;
     this.regenerate = regenerate;
+    this.isOpenLoop = isOpenLoop;
     this.fromShuffleboard = true;
     this.target = 0;
     this.maxVel = 0.5 * SwerveConstants.kMaxSpeedMetersPerSecond;
@@ -162,7 +167,7 @@ public class DriveStraight extends CommandBase {
     desiredStates[1].speedMetersPerSecond = targetVel;
     desiredStates[2].speedMetersPerSecond = targetVel;
     desiredStates[3].speedMetersPerSecond = targetVel;
-    driveTrain.setModuleStates(desiredStates, true);      // TODO Calibrate closed-loop control in SwerveModule.setDesiredState, then change this to closed loop (false)
+    driveTrain.setModuleStates(desiredStates, isOpenLoop);      // TODO Calibrate closed-loop control in SwerveModule.setDesiredState, then change this to closed loop (false)
 
     // Read current module states for logging
     SwerveModuleState[] currentStates = driveTrain.getModuleStates();
