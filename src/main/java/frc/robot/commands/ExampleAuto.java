@@ -20,8 +20,8 @@ public class ExampleAuto extends SequentialCommandGroup {
     public ExampleAuto(DriveTrain s_Swerve){
         TrajectoryConfig config =
             new TrajectoryConfig(
-                    Constants.AutoConstants.kMaxSpeedMetersPerSecond,
-                    Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+                    Constants.SwerveConstants.kMaxSpeedMetersPerSecond,
+                    Constants.SwerveConstants.kMaxAccelerationMetersPerSecondSquare)
                 .setKinematics(Constants.DriveConstants.kDriveKinematics);
 
         // An example trajectory to follow.  All units in meters.
@@ -37,7 +37,7 @@ public class ExampleAuto extends SequentialCommandGroup {
 
         var thetaController =
             new ProfiledPIDController(
-                Constants.AutoConstants.kPThetaController, 0, 0, Constants.AutoConstants.kThetaControllerConstraints);
+                Constants.SwerveConstants.kPThetaController, 0, 0, Constants.SwerveConstants.kThetaControllerConstraints);
         thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
         SwerveControllerCommand swerveControllerCommand =
@@ -45,8 +45,8 @@ public class ExampleAuto extends SequentialCommandGroup {
                 exampleTrajectory,
                 s_Swerve::getPose,
                 Constants.DriveConstants.kDriveKinematics,
-                new PIDController(Constants.AutoConstants.kPXController, 0, 0),
-                new PIDController(Constants.AutoConstants.kPYController, 0, 0),
+                new PIDController(Constants.SwerveConstants.kPXController, 0, 0),
+                new PIDController(Constants.SwerveConstants.kPYController, 0, 0),
                 thetaController,
                 (a) -> s_Swerve.setModuleStates(a, false),
                 s_Swerve);

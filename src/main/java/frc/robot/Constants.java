@@ -5,6 +5,7 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import frc.robot.utilities.TrapezoidProfileBCR;
 
 /**
@@ -74,13 +75,24 @@ public final class Constants {
         // and further derate (initial test by 5%) to account for some battery droop under heavy loads.
         public static final double kMaxSpeedMetersPerSecond = 3.8;          // CALIBRATED
         // Max acceleration measured values 1/13/2023: FL = 28.073, FR = 26.343, BL = 18.482, BR = 19.289
+        public static final double kNominalSpeedMetersPerSecond = 0.5*kMaxSpeedMetersPerSecond;
         public static final double kMaxAccelerationMetersPerSecondSquare = 17; // CALIBRATED
         // Max turn velocity degrees per second measured values 1/13/2023: FL = 1744.629, FR = 1762.207, BL = 1736.719, BR = 2085.645
         public static final double kMaxTurningRadiansPerSecond = 29.671;   // CALIBRATED took 1700 degrees and converted to radians
+        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
         public static final double kVDrive = 0.226; // CALIBRATED = 0.226.  in % output per meters per second
         public static final double kADrive = 0.0;                   // TODO -- Calibrate
         public static final double kSDrive = 0.017; // CALIBRATED = 0.017.  in % output
 
+        public static final double kPXController = 1;
+        public static final double kPYController = 1;
+        public static final double kPThetaController = 1;
+
+        /* Constraint for the motion profilied robot angle controller */
+        public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
+        new TrapezoidProfile.Constraints(
+            kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
 
       public static final class DriveConstants {
@@ -106,19 +118,4 @@ public final class Constants {
         public static double offsetAngleBackRightMotor = 0; // 158.4
       }
 
-      public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 3.8;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
-    
-        public static final double kPXController = 1;
-        public static final double kPYController = 1;
-        public static final double kPThetaController = 1;
-    
-        /* Constraint for the motion profilied robot angle controller */
-        public static final TrapezoidProfileBCR.Constraints kThetaControllerConstraints =
-        new TrapezoidProfileBCR.Constraints(
-            kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-    }
 }
