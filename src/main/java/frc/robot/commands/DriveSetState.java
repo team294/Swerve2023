@@ -24,7 +24,7 @@ public class DriveSetState extends CommandBase {
    * @param driveTrain
    * @param log
    */
-  public DriveSetState(double driveSpeed, double angle, DriveTrain driveTrain, FileLog log, boolean isOpenLoop) {
+  public DriveSetState(double driveSpeed, double angle, boolean isOpenLoop, DriveTrain driveTrain, FileLog log) {
     this.driveTrain = driveTrain;
     this.log = log;
     this.isOpenLoop = isOpenLoop;

@@ -82,7 +82,7 @@ public class DriveStraight extends CommandBase {
    * @param driveTrain reference to the drive train subsystem
    * @param log
    */
-  public DriveStraight(boolean fieldRelative, boolean regenerate, DriveTrain driveTrain, FileLog log, boolean isOpenLoop) {
+  public DriveStraight(boolean fieldRelative, boolean regenerate, boolean isOpenLoop, DriveTrain driveTrain, FileLog log) {
     this.driveTrain = driveTrain;
     this.log = log;
     this.fieldRelative = fieldRelative;
