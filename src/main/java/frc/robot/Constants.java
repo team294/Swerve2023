@@ -5,6 +5,9 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import frc.robot.utilities.TrapezoidProfileBCR;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -72,10 +75,14 @@ public final class Constants {
         // and ensures that the robot travels in the requested direction.  So, use min value of all 4 motors,
         // and further derate (initial test by 5%) to account for some battery droop under heavy loads.
         public static final double kMaxSpeedMetersPerSecond = 3.8;          // CALIBRATED
+        public static final double kNominalSpeedMetersPerSecond = 0.5*kMaxSpeedMetersPerSecond;
         // Max acceleration measured values 1/13/2023: FL = 28.073, FR = 26.343, BL = 18.482, BR = 19.289
         public static final double kMaxAccelerationMetersPerSecondSquare = 17; // CALIBRATED
+        public static final double kNominalAccelerationMetersPerSecondSquare = 0.5*kMaxAccelerationMetersPerSecondSquare;
         // Max turn velocity degrees per second measured values 1/13/2023: FL = 1744.629, FR = 1762.207, BL = 1736.719, BR = 2085.645
         public static final double kMaxTurningRadiansPerSecond = 29.671;   // CALIBRATED took 1700 degrees and converted to radians
+        public static final double kNominalTurningRadiansPerSecond = 6.0;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
         public static final double kVDrive = 0.226; // CALIBRATED = 0.226.  in % output per meters per second
         public static final double kADrive = 0.0;                   // TODO -- Calibrate
         public static final double kSDrive = 0.017; // CALIBRATED = 0.017.  in % output
@@ -103,5 +110,23 @@ public final class Constants {
         public static double offsetAngleFrontRightMotor = 0; // -14
         public static double offsetAngleBackLeftMotor = 0; // -108.2
         public static double offsetAngleBackRightMotor = 0; // 158.4
+      }
+
+      public static final class TrajectoryConstants {
+
+        public static final double kPXController = 1;
+        public static final double kPYController = 1;
+        public static final double kPThetaController = 1;
+
+        public static final TrajectoryConfig swerveTrajectoryConfig =
+            new TrajectoryConfig(
+                    SwerveConstants.kNominalSpeedMetersPerSecond,
+                    SwerveConstants.kNominalAccelerationMetersPerSecondSquare)
+                .setKinematics(DriveConstants.kDriveKinematics);
+
+        /* Constraint for the motion profilied robot angle controller */
+        public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
+        new TrapezoidProfile.Constraints(
+            SwerveConstants.kNominalTurningRadiansPerSecond, SwerveConstants.kMaxAngularSpeedRadiansPerSecondSquared);
       }
 }
