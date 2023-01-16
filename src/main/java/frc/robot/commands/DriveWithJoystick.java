@@ -99,6 +99,10 @@ public class DriveWithJoystick extends CommandBase {
     return false;
   }
 
+  private double scaleTurn(double rawJoystick){
+    return Math.signum(rawJoystick)*(0.640 * rawJoystick * rawJoystick + 0.334 * Math.abs(rawJoystick) + 0.0266);
+  }
+
   private double scaleJoystick(double rawJoystick){
     return Math.signum(rawJoystick)*(0.751*rawJoystick*rawJoystick + 0.221*Math.abs(rawJoystick) + 0.0277);
   }
