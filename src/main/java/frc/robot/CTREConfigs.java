@@ -20,7 +20,7 @@ public final class CTREConfigs {
 
         swerveDriveFXConfig.slot0.kP = 0.10;     // Team364 uses 0.10             // TODO calibrate
         swerveDriveFXConfig.slot0.kI = 0.0;
-        swerveDriveFXConfig.slot0.kD = 0.0005;
+        swerveDriveFXConfig.slot0.kD = 0.005;
         swerveDriveFXConfig.slot0.kF = 0.0;     // Use arbitrary FF instead
         swerveDriveFXConfig.initializationStrategy = SensorInitializationStrategy.BootToZero;
         swerveDriveFXConfig.openloopRamp = 0.0;     // Team364 uses 0.25        // TODO calibrate
