@@ -68,7 +68,7 @@ public class DriveWithJoystick extends CommandBase {
     // Apply deadbands
     fwdVelocity = (Math.abs(fwdVelocity) < OIConstants.joystickDeadband) ? 0 : scaleJoystick(fwdVelocity) * SwerveConstants.kMaxSpeedMetersPerSecond;
     leftVelocity = (Math.abs(leftVelocity) < OIConstants.joystickDeadband) ? 0 : scaleJoystick(leftVelocity) * SwerveConstants.kMaxSpeedMetersPerSecond;
-    turnRate = (Math.abs(turnRate) < OIConstants.joystickDeadband) ? 0 : scaleJoystick(turnRate) * SwerveConstants.kMaxTurningRadiansPerSecond;
+    turnRate = (Math.abs(turnRate) < OIConstants.joystickDeadband) ? 0 : scaleTurn(turnRate) * SwerveConstants.kMaxTurningRadiansPerSecond;
 
     if(log.getLogRotation() == log.DRIVE_CYCLE) {
       log.writeLog(false, "DriveWithJoystickArcade", "Joystick", "Fwd", fwdVelocity, "Left", leftVelocity, "Turn", turnRate);
@@ -99,10 +99,24 @@ public class DriveWithJoystick extends CommandBase {
     return false;
   }
 
+  /**
+   * Re-maps joystick value to better enable fine robot control at small joystick
+   * values (low speeds) and full-speed travel at large joystick values.
+   * This method is optimized for linear travel.
+   * @param rawJoystick Raw joystick value, -1.0 to +1.0
+   * @return Scaled joystick value, -1.0 to +1.0
+   */
   private double scaleTurn(double rawJoystick){
     return Math.signum(rawJoystick)*(0.640 * rawJoystick * rawJoystick + 0.334 * Math.abs(rawJoystick) + 0.0266);
   }
 
+  /**
+   * Re-maps joystick value to better enable fine robot control at small joystick
+   * values (low speeds) and full-speed travel at large joystick values.
+   * This method is optimized for rotating the robot.
+   * @param rawJoystick Raw joystick value, -1.0 to +1.0
+   * @return Scaled joystick value, -1.0 to +1.0
+   */
   private double scaleJoystick(double rawJoystick){
     return Math.signum(rawJoystick)*(0.751*rawJoystick*rawJoystick + 0.221*Math.abs(rawJoystick) + 0.0277);
   }
