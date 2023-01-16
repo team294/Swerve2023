@@ -69,11 +69,11 @@ public class RobotContainer {
     SmartDashboard.putData("Zero Odometry", new DriveResetPose(0, 0, 0, driveTrain, log));
     SmartDashboard.putData("Calibrate Drive Motors", new DriveCalibration(0.5, 12, 0.05, driveTrain, log));
     SmartDashboard.putData("Calibrate Turn Motors", new DriveTurnCalibration(1.0, 10, 0.2, driveTrain, log));
-    SmartDashboard.putData("Drive Wheels 0 deg", new DriveSetState(0, 0, true, driveTrain, log));
-    SmartDashboard.putData("Drive Wheels +85 deg", new DriveSetState(0, 85, true, driveTrain, log));
-    SmartDashboard.putData("Drive Wheels +95 deg", new DriveSetState(0, 95, true, driveTrain, log));
+    SmartDashboard.putData("Drive Wheels 0 deg", new DriveSetState(0, 0, false, driveTrain, log));
+    SmartDashboard.putData("Drive Wheels +85 deg", new DriveSetState(0, 85, false, driveTrain, log));
+    SmartDashboard.putData("Drive Wheels +95 deg", new DriveSetState(0, 95, false, driveTrain, log));
     SmartDashboard.putData("Drive 1.5 mps 0 deg", new DriveSetState(1.5, 0, false, driveTrain, log));
-    SmartDashboard.putData("Drive Straight", new DriveStraight(false, false, true, driveTrain, log));
+    SmartDashboard.putData("Drive Straight", new DriveStraight(false, false, false, driveTrain, log));
 
     // Testing for autos and trajectories
     // TODO Implement a trajectory follower.  See Team364's exampleAuto.java command.

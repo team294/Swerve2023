@@ -195,7 +195,6 @@ public class SwerveModule {
       driveMotor.set(ControlMode.PercentOutput, driveFeedforward.calculate(desiredState.speedMetersPerSecond));
     }
     else {
-      // TODO Test and calibrate closed loop control
       driveMotor.set(ControlMode.Velocity, calculateDriveEncoderVelocityRaw(desiredState.speedMetersPerSecond), 
         DemandType.ArbitraryFeedForward, driveFeedforward.calculate(desiredState.speedMetersPerSecond));
     }
