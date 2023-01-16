@@ -49,7 +49,7 @@ public final class Constants {
         public static final int usbCoPanel = 3;
 
         // TODO Fix code or this constant so that the robot does not move when joystick is "neutral"
-        public static final double joystickDeadband = 0.02;
+        public static final double joystickDeadband = 0.01;
     }
 
     public static final class RobotDimensions {

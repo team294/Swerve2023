@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.SwerveConstants;
@@ -59,16 +60,20 @@ public class DriveWithJoystick extends CommandBase {
     fwdVelocity = -leftJoystick.getY();
     leftVelocity = -leftJoystick.getX();
     turnRate = -rightJoystick.getX();
+    SmartDashboard.putNumber("Left Joystick Y", fwdVelocity);
+    SmartDashboard.putNumber("Left Joystick X", leftVelocity);
+    SmartDashboard.putNumber("Right Joystick X", turnRate);
+
 
     // Apply deadbands
-    fwdVelocity = (Math.abs(fwdVelocity) < OIConstants.joystickDeadband) ? 0 : fwdVelocity * SwerveConstants.kMaxSpeedMetersPerSecond;
-    leftVelocity = (Math.abs(leftVelocity) < OIConstants.joystickDeadband) ? 0 : leftVelocity * SwerveConstants.kMaxSpeedMetersPerSecond;
-    turnRate = (Math.abs(turnRate) < OIConstants.joystickDeadband) ? 0 : turnRate * SwerveConstants.kMaxTurningRadiansPerSecond;
+    fwdVelocity = (Math.abs(fwdVelocity) < OIConstants.joystickDeadband) ? 0 : scaleJoystick(fwdVelocity) * SwerveConstants.kMaxSpeedMetersPerSecond;
+    leftVelocity = (Math.abs(leftVelocity) < OIConstants.joystickDeadband) ? 0 : scaleJoystick(leftVelocity) * SwerveConstants.kMaxSpeedMetersPerSecond;
+    turnRate = (Math.abs(turnRate) < OIConstants.joystickDeadband) ? 0 : scaleJoystick(turnRate) * SwerveConstants.kMaxTurningRadiansPerSecond;
 
     if(log.getLogRotation() == log.DRIVE_CYCLE) {
       log.writeLog(false, "DriveWithJoystickArcade", "Joystick", "Fwd", fwdVelocity, "Left", leftVelocity, "Turn", turnRate);
     }
-
+    
     // double fwdRateChange = (fwdPercent - lastFwdPercent) / (curTime - lastTime);
     // if (fwdRateChange > maxFwdRateChange) {
     //   fwdPercent = lastFwdPercent + (curTime - lastTime)*maxFwdRateChange;
@@ -92,5 +97,13 @@ public class DriveWithJoystick extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
+  }
+
+  private double scaleTurn(double rawJoystick){
+    return Math.signum(rawJoystick)*(0.640 * rawJoystick * rawJoystick + 0.334 * Math.abs(rawJoystick) + 0.0266);
+  }
+
+  private double scaleJoystick(double rawJoystick){
+    return Math.signum(rawJoystick)*(0.751*rawJoystick*rawJoystick + 0.221*Math.abs(rawJoystick) + 0.0277);
   }
 }
